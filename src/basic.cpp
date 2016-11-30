@@ -250,11 +250,28 @@ void defineGraphAttributes () {
 }
 
 void defineGraphGenerators () {
-  function("randomGraph", &ogdf::randomGraph);
-  function("randomSimpleGraph", &ogdf::randomSimpleGraph);
-  function("completeGraph", &ogdf::completeGraph);
   function("completeBipartiteGraph", &ogdf::completeBipartiteGraph);
+  function("completeGraph", &ogdf::completeGraph);
+  function("cubeGraph", &ogdf::cubeGraph);
+  function("gridGraph", &ogdf::gridGraph);
+  function("petersenGraph", &ogdf::petersenGraph);
+  function("planarBiconnectedDiGraph", &ogdf::planarBiconnectedDiGraph);
+  function("planarBiconnectedGraph", &ogdf::planarBiconnectedGraph);
+  function("planarCNBGraph", &ogdf::planarCNBGraph);
   function("planarConnectedGraph", &ogdf::planarConnectedGraph);
+  function("planarTriconnectedGraph", select_overload<void (ogdf::Graph&, int, int)>(&ogdf::planarTriconnectedGraph));
+  function("randomBiconnectedGraph", &ogdf::randomBiconnectedGraph);
+  function("randomDiGraph", &ogdf::randomDiGraph);
+  function("randomGraph", &ogdf::randomGraph);
+  function("randomHierarchy", &ogdf::randomHierarchy);
+  function("randomSeriesParallelDAG", &ogdf::randomSeriesParallelDAG);
+  function("randomSimpleGraph", &ogdf::randomSimpleGraph);
+  function("randomTree", select_overload<void (ogdf::Graph&, int)>(&ogdf::randomTree));
+  function("randomTriconnectedGraph", &ogdf::randomTriconnectedGraph);
+  function("regularTree", &ogdf::regularTree);
+  function("suspension", &ogdf::suspension);
+  function("upwardPlanarBiconnectedDiGraph", &ogdf::upwardPlanarBiconnectedDiGraph);
+  function("wheelGraph", &ogdf::wheelGraph);
 }
 
 void defineBasic () {

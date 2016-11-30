@@ -7,65 +7,10 @@
 <body>
 <input id="n" type="number" value="100" />
 <input id="m" type="number" value="100" />
+<select id="layout"></select>
 <button id="button">run</button>
 <img id="display"/>
 <script src="emogdf.js"></script>
-<script>
-Module.postRun.push(() => {
-  const {
-    Attributes,
-    FMMMLayout,
-    Graph,
-    GraphAttributes,
-    GraphIO,
-    NodeList,
-    Shape,
-    Color,
-    randomGraph
-  } = Module
-  const {
-    nodeGraphics,
-    nodeStyle,
-    edgeGraphics,
-    edgeStyle
-  } = Attributes
-
-  const randomColor = () => {
-    return new Color(
-      Math.floor(Math.random() * 255),
-      Math.floor(Math.random() * 255),
-      Math.floor(Math.random() * 255),
-      255
-    )
-  }
-
-  document.getElementById('button').addEventListener('click', () => {
-    const graph = new Graph()
-    const n = +document.getElementById('n').value
-    const m = +document.getElementById('m').value
-    randomGraph(graph, n, m)
-
-    const attributes = new GraphAttributes(graph, nodeGraphics.value | edgeGraphics.value | nodeStyle.value | edgeStyle.value)
-    const nodes = new NodeList()
-    graph.allNodes(nodes)
-    for (let i = 0; i < nodes.size(); ++i) {
-      const node = nodes.at(i)
-      // console.log(node.index(), node.degree())
-      // console.log(node.graphOf(), graph, graph === node.graphOf())
-      // console.log(node.graphOf().numberOfNodes(), node.graphOf().numberOfEdges())
-      attributes.setWidth(node, 10)
-      attributes.setHeight(node, 10)
-      attributes.setShape(node, Shape.shEllipse)
-      attributes.setFillColor(node, randomColor())
-    }
-    const layout = new FMMMLayout()
-    layout.call(attributes)
-
-    const svg = GraphIO.getSVG(attributes)
-    const img = document.getElementById('display')
-    img.src = `data:image/svg+xml;base64,${btoa(svg)}`
-  })
-})
-</script>
+<script src="main.js"></script>
 </body>
 </html>

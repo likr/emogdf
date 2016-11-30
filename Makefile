@@ -5,7 +5,7 @@ SOURCES := $(wildcard $(SRCDIR)/*.cpp)
 OBJECTS := $(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 CXX_OPTIONS := --bind -O3 -Iinclude -DNDEBUG
 
-emogdf.js: $(OBJECTS)
+demo/emogdf.js: $(OBJECTS)
 	em++ $(CXX_OPTIONS) -o $@ $(OBJECTS) libOGDF.a libCOIN.a
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
