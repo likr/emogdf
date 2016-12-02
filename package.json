@@ -1,0 +1,23 @@
+{
+  "name": "emogdf",
+  "version": "0.0.0",
+  "description": "Experimental port of Open Graph Drawing Framework (OGDF) for the Web",
+  "main": "emogdf.js",
+  "files": [
+    "emogdf.js"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/likr/emogdf.git"
+  },
+  "keywords": ["Graph Drawing", "Visualization", "Algorithm"],
+  "author": "Yosuke Onoue <onoue@likr-lab.com>",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/likr/emogdf/issues"
+  },
+  "homepage": "https://github.com/likr/emogdf#readme"
+}
