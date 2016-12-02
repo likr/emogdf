@@ -120,6 +120,9 @@ void defineGraph () {
     .function("graphOf", &ogdf::NodeElement::graphOf, allow_raw_pointers())
 #endif
     ;
+
+  class_<ogdf::EdgeElement>("EdgeElement")
+    ;
 }
 
 void defineGraphAttributes () {
@@ -246,6 +249,8 @@ void defineGraphAttributes () {
     .function("setGreen", select_overload<void (unsigned char)>(&ogdf::Color::green))
     .function("setBlue", select_overload<void (unsigned char)>(&ogdf::Color::blue))
     .function("setAlpha", select_overload<void (unsigned char)>(&ogdf::Color::alpha))
+    .function("fromString", &ogdf::Color::fromString)
+    .function("toString", &ogdf::Color::toString)
     ;
 }
 
