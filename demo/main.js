@@ -1,4 +1,3 @@
-console.log(ogdf)
 const {
   Attributes,
   Color,

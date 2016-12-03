@@ -7,17 +7,26 @@
     "emogdf.js"
   ],
   "scripts": {
+    "build": "rm -rf build && mkdir -p build && make",
+    "deploy": "npm run build && make demo && gh-pages -d demo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/likr/emogdf.git"
   },
-  "keywords": ["Graph Drawing", "Visualization", "Algorithm"],
+  "keywords": [
+    "Graph Drawing",
+    "Visualization",
+    "Algorithm"
+  ],
   "author": "Yosuke Onoue <onoue@likr-lab.com>",
   "license": "GPLv3",
   "bugs": {
     "url": "https://github.com/likr/emogdf/issues"
   },
-  "homepage": "https://github.com/likr/emogdf#readme"
+  "homepage": "https://github.com/likr/emogdf#readme",
+  "devDependencies": {
+    "gh-pages": "^0.12.0"
+  }
 }
