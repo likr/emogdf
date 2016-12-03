@@ -3,6 +3,7 @@
 void defineBasic();
 void defineEnergybased();
 void defineFileformats();
+void defineLayered();
 void defineMisclayout();
 void definePacking();
 void definePlanarity();
@@ -14,6 +15,7 @@ EMSCRIPTEN_BINDINGS(OGDF) {
   defineEnergybased();
   defineFileformats();
   defineMisclayout();
+  defineLayered();
   definePacking();
   definePlanarity();
   defineTree();
