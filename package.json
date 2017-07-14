@@ -28,8 +28,5 @@
   "homepage": "https://github.com/likr/emogdf#readme",
   "devDependencies": {
     "gh-pages": "^0.12.0"
-  },
-  "dependencies": {
-    "gh-pages": "^0.12.0"
   }
 }
