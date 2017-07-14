@@ -67,23 +67,29 @@
 # include <fcntl.h>
 # include <sys/time.h>
 #endif
+#ifndef EMSCRIPTEN
 #ifdef __GNUC__
 # include <cpuid.h>
+#endif
 #endif
 
 static inline void cpuid(int CPUInfo[4], int infoType)
 {
+#ifndef EMSCRIPTEN
 #if defined(OGDF_SYSTEM_WINDOWS)
 	__cpuid(CPUInfo, infoType);
 #else
+#endif
 	uint32_t a = 0;
 	uint32_t b = 0;
 	uint32_t c = 0;
 	uint32_t d = 0;
 
+#ifndef EMSCRIPTEN
 # ifdef __GNUC__
 	__get_cpuid(infoType, &a, &b, &c, &d);
 # endif
+#endif
 
 	CPUInfo[0] = a;
 	CPUInfo[1] = b;

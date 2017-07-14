@@ -1,4 +1,6 @@
 build
-emogdf.js
-emogdf.js.mem
+ogdf-build
+emogdf-asmjs.js
+emogdf-wasm.js
+emogdf-wasm.wasm
 node_modules

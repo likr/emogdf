@@ -8,25 +8,6 @@ using namespace emscripten;
 
 typedef ogdf::List<ogdf::node> NodeList;
 
-enum Attributes {
-  nodeGraphics = ogdf::GraphAttributes::nodeGraphics,
-  edgeGraphics = ogdf::GraphAttributes::edgeGraphics,
-  edgeIntWeight = ogdf::GraphAttributes::edgeIntWeight,
-  edgeDoubleWeight = ogdf::GraphAttributes::edgeDoubleWeight,
-  edgeLabel = ogdf::GraphAttributes::edgeLabel,
-  nodeLabel = ogdf::GraphAttributes::nodeLabel,
-  edgeType = ogdf::GraphAttributes::edgeType,
-  nodeType = ogdf::GraphAttributes::nodeType,
-  nodeId = ogdf::GraphAttributes::nodeId,
-  edgeArrow = ogdf::GraphAttributes::edgeArrow,
-  edgeStyle = ogdf::GraphAttributes::edgeStyle,
-  nodeStyle = ogdf::GraphAttributes::nodeStyle,
-  nodeTemplate = ogdf::GraphAttributes::nodeTemplate,
-  edgeSubGraphs = ogdf::GraphAttributes::edgeSubGraphs,
-  nodeWeight = ogdf::GraphAttributes::nodeWeight,
-  threeD = ogdf::GraphAttributes::threeD,
-};
-
 void setX (ogdf::GraphAttributes& GA, ogdf::node n, double val) {
   GA.x(n) = val;
 }
@@ -51,9 +32,9 @@ void setShape (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::Shape val) {
 	GA.shape(n) = val;
 }
 
-void setStrokeType (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::StrokeType val) {
-  GA.setStrokeType(n, val);
-}
+// void setStrokeType (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::StrokeType val) {
+//   GA.setStrokeType(n, val);
+// }
 
 void setStrokeColor (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::Color val) {
   GA.strokeColor(n) = val;
@@ -63,9 +44,9 @@ void setStrokeWidth (ogdf::GraphAttributes& GA, ogdf::node n, float val) {
   GA.strokeWidth(n) = val;
 }
 
-void setFillPattern (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::FillPattern val) {
-  GA.setFillPattern(n, val);
-}
+// void setFillPattern (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::FillPattern val) {
+//   GA.setFillPattern(n, val);
+// }
 
 void setFillColor (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::Color val) {
   GA.fillColor(n) = val;
@@ -152,10 +133,10 @@ void defineGraphAttributes () {
     .function("setWidth", &setWidth, allow_raw_pointers())
     .function("setHeight", &setHeight, allow_raw_pointers())
     .function("setShape", &setShape, allow_raw_pointers())
-    .function("setStrokeType", &setStrokeType, allow_raw_pointers())
+    // .function("setStrokeType", &setStrokeType, allow_raw_pointers())
     .function("setStrokeColor", &setStrokeColor, allow_raw_pointers())
     .function("setStrokeWidth", &setStrokeWidth, allow_raw_pointers())
-    .function("setFillPattern", &setFillPattern, allow_raw_pointers())
+    // .function("setFillPattern", &setFillPattern, allow_raw_pointers())
     .function("setFillColor", &setFillColor, allow_raw_pointers())
     .function("setFillBgColor", &setFillBgColor, allow_raw_pointers())
     .function("setLabel", &setLabel, allow_raw_pointers())
@@ -165,68 +146,68 @@ void defineGraphAttributes () {
     .function("setIdNode", select_overload<int (ogdf::node) const>(&ogdf::GraphAttributes::idNode), allow_raw_pointers())
     ;
 
-  enum_<Attributes>("Attributes")
-    .value("nodeGraphics" ,nodeGraphics)
-    .value("edgeGraphics" ,edgeGraphics)
-    .value("edgeIntWeight" ,edgeIntWeight)
-    .value("edgeDoubleWeight" ,edgeDoubleWeight)
-    .value("edgeLabel" ,edgeLabel)
-    .value("nodeLabel" ,nodeLabel)
-    .value("edgeType" ,edgeType)
-    .value("nodeType" ,nodeType)
-    .value("nodeId" ,nodeId)
-    .value("edgeArrow" ,edgeArrow)
-    .value("edgeStyle" ,edgeStyle)
-    .value("nodeStyle" ,nodeStyle)
-    .value("nodeTemplate" ,nodeTemplate)
-    .value("edgeSubGraphs" ,edgeSubGraphs)
-    .value("nodeWeight" ,nodeWeight)
-    .value("threeD" ,threeD)
-    ;
+  // enum_<Attributes>("Attributes")
+  //   .value("nodeGraphics" ,nodeGraphics)
+  //   .value("edgeGraphics" ,edgeGraphics)
+  //   .value("edgeIntWeight" ,edgeIntWeight)
+  //   .value("edgeDoubleWeight" ,edgeDoubleWeight)
+  //   .value("edgeLabel" ,edgeLabel)
+  //   .value("nodeLabel" ,nodeLabel)
+  //   .value("edgeType" ,edgeType)
+  //   .value("nodeType" ,nodeType)
+  //   .value("nodeId" ,nodeId)
+  //   .value("edgeArrow" ,edgeArrow)
+  //   .value("edgeStyle" ,edgeStyle)
+  //   .value("nodeStyle" ,nodeStyle)
+  //   .value("nodeTemplate" ,nodeTemplate)
+  //   .value("edgeSubGraphs" ,edgeSubGraphs)
+  //   .value("nodeWeight" ,nodeWeight)
+  //   .value("threeD" ,threeD)
+  //   ;
 
-  enum_<ogdf::Shape>("Shape")
-    .value("shRect", ogdf::Shape::shRect)
-    .value("shRoundedRect", ogdf::Shape::shRoundedRect)
-    .value("shEllipse", ogdf::Shape::shEllipse)
-    .value("shTriangle", ogdf::Shape::shTriangle)
-    .value("shPentagon", ogdf::Shape::shPentagon)
-    .value("shHexagon", ogdf::Shape::shHexagon)
-    .value("shOctagon", ogdf::Shape::shOctagon)
-    .value("shRhomb", ogdf::Shape::shRhomb)
-    .value("shTrapeze", ogdf::Shape::shTrapeze)
-    .value("shParallelogram", ogdf::Shape::shParallelogram)
-    .value("shInvTriangle", ogdf::Shape::shInvTriangle)
-    .value("shInvTrapeze", ogdf::Shape::shInvTrapeze)
-    .value("shInvParallelogram", ogdf::Shape::shInvParallelogram)
-    .value("shImage", ogdf::Shape::shImage)
-    ;
+  // enum_<ogdf::Shape>("Shape")
+  //   .value("shRect", ogdf::Shape::shRect)
+  //   .value("shRoundedRect", ogdf::Shape::shRoundedRect)
+  //   .value("shEllipse", ogdf::Shape::shEllipse)
+  //   .value("shTriangle", ogdf::Shape::shTriangle)
+  //   .value("shPentagon", ogdf::Shape::shPentagon)
+  //   .value("shHexagon", ogdf::Shape::shHexagon)
+  //   .value("shOctagon", ogdf::Shape::shOctagon)
+  //   .value("shRhomb", ogdf::Shape::shRhomb)
+  //   .value("shTrapeze", ogdf::Shape::shTrapeze)
+  //   .value("shParallelogram", ogdf::Shape::shParallelogram)
+  //   .value("shInvTriangle", ogdf::Shape::shInvTriangle)
+  //   .value("shInvTrapeze", ogdf::Shape::shInvTrapeze)
+  //   .value("shInvParallelogram", ogdf::Shape::shInvParallelogram)
+  //   .value("shImage", ogdf::Shape::shImage)
+  //   ;
 
-  enum_<ogdf::StrokeType>("StrokeType")
-    .value("stNone", ogdf::StrokeType::stNone)
-    .value("stSolid", ogdf::StrokeType::stSolid)
-    .value("stDash", ogdf::StrokeType::stDash)
-    .value("stDot", ogdf::StrokeType::stDot)
-    .value("stDashdot", ogdf::StrokeType::stDashdot)
-    .value("stDashdotdot", ogdf::StrokeType::stDashdotdot)
-    ;
+  // enum_<ogdf::StrokeType>("StrokeType")
+  //   .value("stNone", ogdf::StrokeType::stNone)
+  //   .value("stSolid", ogdf::StrokeType::stSolid)
+  //   .value("stDash", ogdf::StrokeType::stDash)
+  //   .value("stDot", ogdf::StrokeType::stDot)
+  //   .value("stDashdot", ogdf::StrokeType::stDashdot)
+  //   .value("stDashdotdot", ogdf::StrokeType::stDashdotdot)
+  //   ;
 
-  enum_<ogdf::FillPattern>("FillPattern")
-    .value("fpNone", ogdf::FillPattern::fpNone)
-    .value("fpSolid", ogdf::FillPattern::fpSolid)
-    .value("fpDense1", ogdf::FillPattern::fpDense1)
-    .value("fpDense2", ogdf::FillPattern::fpDense2)
-    .value("fpDense3", ogdf::FillPattern::fpDense3)
-    .value("fpDense4", ogdf::FillPattern::fpDense4)
-    .value("fpDense5", ogdf::FillPattern::fpDense5)
-    .value("fpDense6", ogdf::FillPattern::fpDense6)
-    .value("fpDense7", ogdf::FillPattern::fpDense7)
-    .value("fpHorizontal", ogdf::FillPattern::fpHorizontal)
-    .value("fpVertical", ogdf::FillPattern::fpVertical)
-    .value("fpCross", ogdf::FillPattern::fpCross)
-    .value("fpBackwardDiagonal", ogdf::FillPattern::fpBackwardDiagonal)
-    .value("fpForwardDiagonal", ogdf::FillPattern::fpForwardDiagonal)
-    .value("fpDiagonalCross", ogdf::FillPattern::fpDiagonalCross)
-    ;
+  // enum_<ogdf::FillPattern>("FillPattern")
+  //   .value("fpNone", ogdf::FillPattern::fpNone)
+  //   .value("fpSolid", ogdf::FillPattern::fpSolid)
+  //   .value("fpDense1", ogdf::FillPattern::fpDense1)
+  //   .value("fpDense2", ogdf::FillPattern::fpDense2)
+  //   .value("fpDense3", ogdf::FillPattern::fpDense3)
+  //   .value("fpDense4", ogdf::FillPattern::fpDense4)
+  //   .value("fpDense5", ogdf::FillPattern::fpDense5)
+  //   .value("fpDense6", ogdf::FillPattern::fpDense6)
+  //   .value("fpDense7", ogdf::FillPattern::fpDense7)
+  //   .value("fpHorizontal", ogdf::FillPattern::fpHorizontal)
+  //   .value("fpVertical", ogdf::FillPattern::fpVertical)
+  //   .value("fpCross", ogdf::FillPattern::fpCross)
+  //   .value("fpBackwardDiagonal", ogdf::FillPattern::fpBackwardDiagonal)
+  //   .value("fpForwardDiagonal", ogdf::FillPattern::fpForwardDiagonal)
+  //   .value("fpDiagonalCross", ogdf::FillPattern::fpDiagonalCross)
+  //   ;
 
   enum_<ogdf::Graph::NodeType>("NodeType")
     .value("vertex", ogdf::Graph::NodeType::vertex)
