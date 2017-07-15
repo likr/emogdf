@@ -117,6 +117,8 @@ void defineGraph () {
 
   class_<ogdf::EdgeElement>("EdgeElement")
     .function("index", &ogdf::EdgeElement::index)
+    .function("source", &ogdf::EdgeElement::source, allow_raw_pointers())
+    .function("target", &ogdf::EdgeElement::target, allow_raw_pointers())
     ;
 }
 

@@ -49,6 +49,8 @@ run((ogdf) => {
       const edges = new EdgeList()
       graph.allEdges(edges)
       assert.equal(edges.at(0).index(), e.index())
+      assert.equal(edges.at(0).source().index(), u.index())
+      assert.equal(edges.at(0).target().index(), v.index())
     })
   })
 
