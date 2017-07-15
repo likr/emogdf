@@ -2,14 +2,16 @@
   "name": "emogdf",
   "version": "0.0.0",
   "description": "Experimental port of Open Graph Drawing Framework (OGDF) for the Web",
-  "main": "emogdf.js",
+  "main": "emogdf-asmjs.js",
   "files": [
-    "emogdf.js"
+    "emogdf-asmjs.js",
+    "emogdf-wasm.js",
+    "emogdf-wasm.wasm"
   ],
   "scripts": {
     "build": "rm -rf build && mkdir -p build && make",
     "deploy": "npm run build && make demo && gh-pages -d demo",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,8 @@
   },
   "homepage": "https://github.com/likr/emogdf#readme",
   "devDependencies": {
-    "gh-pages": "^0.12.0"
+    "gh-pages": "^0.12.0",
+    "mocha": "^3.4.2",
+    "power-assert": "^1.4.4"
   }
 }

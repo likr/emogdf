@@ -8,6 +8,8 @@ using namespace emscripten;
 
 typedef ogdf::List<ogdf::node> NodeList;
 
+typedef ogdf::List<ogdf::edge> EdgeList;
+
 void setX (ogdf::GraphAttributes& GA, ogdf::node n, double val) {
   GA.x(n) = val;
 }
@@ -68,6 +70,10 @@ ogdf::node nodeListAt (NodeList& list, int pos) {
   return *list.get(pos);
 }
 
+ogdf::edge edgeListAt (EdgeList& list, int pos) {
+  return *list.get(pos);
+}
+
 void defineGraph () {
   class_<ogdf::Graph>("Graph")
     .constructor()
@@ -86,6 +92,7 @@ void defineGraph () {
     .function("newNode", select_overload<ogdf::node(int)>(&ogdf::Graph::newNode), allow_raw_pointers())
     .function("newEdge", select_overload<ogdf::edge(ogdf::node, ogdf::node)>(&ogdf::Graph::newEdge), allow_raw_pointers())
     .function("allNodes", &ogdf::Graph::allNodes<NodeList>)
+    .function("allEdges", &ogdf::Graph::allEdges<EdgeList>)
     ;
 
   class_<NodeList>("NodeList")
@@ -102,7 +109,14 @@ void defineGraph () {
 #endif
     ;
 
+  class_<EdgeList>("EdgeList")
+    .constructor()
+    .function("at", &edgeListAt, allow_raw_pointers())
+    .function("size", &EdgeList::size)
+    ;
+
   class_<ogdf::EdgeElement>("EdgeElement")
+    .function("index", &ogdf::EdgeElement::index)
     ;
 }
 
@@ -144,43 +158,40 @@ void defineGraphAttributes () {
     .function("setWeight", select_overload<int (ogdf::node) const>(&ogdf::GraphAttributes::weight), allow_raw_pointers())
     .function("setType", select_overload<ogdf::Graph::NodeType (ogdf::node) const>(&ogdf::GraphAttributes::type), allow_raw_pointers())
     .function("setIdNode", select_overload<int (ogdf::node) const>(&ogdf::GraphAttributes::idNode), allow_raw_pointers())
+    .class_property("nodeGraphics", &ogdf::GraphAttributes::nodeGraphics)
+    .class_property("edgeGraphics", &ogdf::GraphAttributes::edgeGraphics)
+    .class_property("edgeIntWeight", &ogdf::GraphAttributes::edgeIntWeight)
+    .class_property("edgeDoubleWeight", &ogdf::GraphAttributes::edgeDoubleWeight)
+    .class_property("edgeLabel", &ogdf::GraphAttributes::edgeLabel)
+    .class_property("nodeLabel", &ogdf::GraphAttributes::nodeLabel)
+    .class_property("edgeType", &ogdf::GraphAttributes::edgeType)
+    .class_property("nodeType", &ogdf::GraphAttributes::nodeType)
+    .class_property("nodeId", &ogdf::GraphAttributes::nodeId)
+    .class_property("edgeArrow", &ogdf::GraphAttributes::edgeArrow)
+    .class_property("edgeStyle", &ogdf::GraphAttributes::edgeStyle)
+    .class_property("nodeStyle", &ogdf::GraphAttributes::nodeStyle)
+    .class_property("nodeTemplate", &ogdf::GraphAttributes::nodeTemplate)
+    .class_property("edgeSubGraphs", &ogdf::GraphAttributes::edgeSubGraphs)
+    .class_property("nodeWeight", &ogdf::GraphAttributes::nodeWeight)
+    .class_property("threeD", &ogdf::GraphAttributes::threeD)
     ;
 
-  // enum_<Attributes>("Attributes")
-  //   .value("nodeGraphics" ,nodeGraphics)
-  //   .value("edgeGraphics" ,edgeGraphics)
-  //   .value("edgeIntWeight" ,edgeIntWeight)
-  //   .value("edgeDoubleWeight" ,edgeDoubleWeight)
-  //   .value("edgeLabel" ,edgeLabel)
-  //   .value("nodeLabel" ,nodeLabel)
-  //   .value("edgeType" ,edgeType)
-  //   .value("nodeType" ,nodeType)
-  //   .value("nodeId" ,nodeId)
-  //   .value("edgeArrow" ,edgeArrow)
-  //   .value("edgeStyle" ,edgeStyle)
-  //   .value("nodeStyle" ,nodeStyle)
-  //   .value("nodeTemplate" ,nodeTemplate)
-  //   .value("edgeSubGraphs" ,edgeSubGraphs)
-  //   .value("nodeWeight" ,nodeWeight)
-  //   .value("threeD" ,threeD)
-  //   ;
-
-  // enum_<ogdf::Shape>("Shape")
-  //   .value("shRect", ogdf::Shape::shRect)
-  //   .value("shRoundedRect", ogdf::Shape::shRoundedRect)
-  //   .value("shEllipse", ogdf::Shape::shEllipse)
-  //   .value("shTriangle", ogdf::Shape::shTriangle)
-  //   .value("shPentagon", ogdf::Shape::shPentagon)
-  //   .value("shHexagon", ogdf::Shape::shHexagon)
-  //   .value("shOctagon", ogdf::Shape::shOctagon)
-  //   .value("shRhomb", ogdf::Shape::shRhomb)
-  //   .value("shTrapeze", ogdf::Shape::shTrapeze)
-  //   .value("shParallelogram", ogdf::Shape::shParallelogram)
-  //   .value("shInvTriangle", ogdf::Shape::shInvTriangle)
-  //   .value("shInvTrapeze", ogdf::Shape::shInvTrapeze)
-  //   .value("shInvParallelogram", ogdf::Shape::shInvParallelogram)
-  //   .value("shImage", ogdf::Shape::shImage)
-  //   ;
+  enum_<ogdf::Shape>("Shape")
+    .value("Rect", ogdf::Shape::Rect)
+    .value("RoundedRect", ogdf::Shape::RoundedRect)
+    .value("Ellipse", ogdf::Shape::Ellipse)
+    .value("Triangle", ogdf::Shape::Triangle)
+    .value("Pentagon", ogdf::Shape::Pentagon)
+    .value("Hexagon", ogdf::Shape::Hexagon)
+    .value("Octagon", ogdf::Shape::Octagon)
+    .value("Rhomb", ogdf::Shape::Rhomb)
+    .value("Trapeze", ogdf::Shape::Trapeze)
+    .value("Parallelogram", ogdf::Shape::Parallelogram)
+    .value("InvTriangle", ogdf::Shape::InvTriangle)
+    .value("InvTrapeze", ogdf::Shape::InvTrapeze)
+    .value("InvParallelogram", ogdf::Shape::InvParallelogram)
+    .value("Image", ogdf::Shape::Image)
+    ;
 
   // enum_<ogdf::StrokeType>("StrokeType")
   //   .value("stNone", ogdf::StrokeType::stNone)
