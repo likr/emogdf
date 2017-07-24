@@ -28,6 +28,7 @@ void defineEnergybased () {
     .function("useHighLevelOptions", select_overload<void(bool)>(&ogdf::FMMMLayout::useHighLevelOptions))
     .function("unitEdgeLength", select_overload<void(double)>(&ogdf::FMMMLayout::unitEdgeLength))
     .function("newInitialPlacement", select_overload<void(bool)>(&ogdf::FMMMLayout::newInitialPlacement))
+    .function("randSeed", select_overload<void(int)>(&ogdf::FMMMLayout::randSeed))
     ;
 
   class_<ogdf::TutteLayout>("TutteLayout")
