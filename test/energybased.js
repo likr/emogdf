@@ -4,6 +4,8 @@ const {run} = require('./util')
 
 run((ogdf) => {
   const {
+    Graph,
+    GraphAttributes,
     FMMMLayout
   } = ogdf
   describe('FMMMLayout', () => {
@@ -32,6 +34,25 @@ run((ogdf) => {
       it('sets parameter', () => {
         const layout = new FMMMLayout()
         layout.randSeed(0)
+      })
+    })
+
+    describe('call(GA)', () => {
+      it('computes layout', () => {
+        const graph = new Graph()
+        const u = graph.newNode()
+        const v = graph.newNode()
+        graph.newEdge(u, v)
+        const {
+          nodeGraphics,
+          edgeGraphics,
+          nodeStyle,
+          edgeStyle
+        } = GraphAttributes
+        const attributes = new GraphAttributes(graph, nodeGraphics | edgeGraphics | nodeStyle | edgeStyle)
+
+        let layout = new FMMMLayout()
+        layout.call(attributes)
       })
     })
   })
