@@ -1184,7 +1184,7 @@ void FMMMLayout::create_initial_placement(Graph& G, NodeArray<NodeAttributes>& A
 		create_initial_placement_random(G, A);
 		break;
 	case FMMMOptions::InitialPlacementForces::RandomRandIterNr:
-		srand(randSeed());
+		setSeed(randSeed());
 		create_initial_placement_random(G, A);
 	}
 

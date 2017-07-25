@@ -51,7 +51,7 @@ run((ogdf) => {
         } = GraphAttributes
         const attributes = new GraphAttributes(graph, nodeGraphics | edgeGraphics | nodeStyle | edgeStyle)
 
-        let layout = new FMMMLayout()
+        const layout = new FMMMLayout()
         layout.call(attributes)
       })
     })
