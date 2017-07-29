@@ -246,6 +246,8 @@ void defineGraphAttributes () {
     .function("fromString", &ogdf::Color::fromString)
     .function("toString", &ogdf::Color::toString)
     ;
+
+  function("setSeed", &ogdf::setSeed);
 }
 
 void defineGraphGenerators () {

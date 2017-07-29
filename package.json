@@ -11,7 +11,7 @@
   "scripts": {
     "build": "rm -rf build && mkdir -p build && make",
     "deploy": "npm run build && make demo && gh-pages -d demo",
-    "test": "mocha"
+    "test": "mocha --recursive --no-timeouts"
   },
   "repository": {
     "type": "git",
