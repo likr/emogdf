@@ -1,5 +1,4 @@
 const {
-  Attributes,
   Color,
   Graph,
   GraphAttributes,
@@ -19,6 +18,7 @@ const {
   // FastMultipoleMultilevelEmbedder,
   FMMMLayout,
   PlanarizationLayout,
+  SugiyamaLayout,
   TreeLayout,
   TutteLayout
   // UpwardPlanarizationLayout
@@ -29,7 +29,7 @@ const {
   nodeStyle,
   edgeGraphics,
   edgeStyle
-} = Attributes
+} = GraphAttributes
 
 const layoutMethods = {
   balloon: BalloonLayout,
@@ -42,6 +42,7 @@ const layoutMethods = {
   // fastMultipoleMultilevelEmbedder: FastMultipoleMultilevelEmbedder,
   fmmm: FMMMLayout,
   planarization: PlanarizationLayout,
+  sugiyama: SugiyamaLayout,
   tree: TreeLayout,
   tutte: TutteLayout
   // upwardPlanarization: UpwardPlanarizationLayout
@@ -69,14 +70,14 @@ document.getElementById('button').addEventListener('click', () => {
   const m = +document.getElementById('m').value
   randomGraph(graph, n, m)
 
-  const attributes = new GraphAttributes(graph, nodeGraphics.value | edgeGraphics.value | nodeStyle.value | edgeStyle.value)
+  const attributes = new GraphAttributes(graph, nodeGraphics | edgeGraphics | nodeStyle | edgeStyle)
   const nodes = new NodeList()
   graph.allNodes(nodes)
   for (let i = 0; i < nodes.size(); ++i) {
     const node = nodes.at(i)
     attributes.setWidth(node, 10)
     attributes.setHeight(node, 10)
-    attributes.setShape(node, Shape.shEllipse)
+    attributes.setShape(node, Shape.Ellipse)
     attributes.setFillColor(node, randomColor())
   }
   const layout = new layoutMethods[document.getElementById('layout').value]()
