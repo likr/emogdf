@@ -1,5 +1,6 @@
 #include <emscripten/bind.h>
 #include <ogdf/basic/basic.h>
+#include <ogdf/basic/geometry.h>
 #include <ogdf/basic/Graph_d.h>
 #include <ogdf/basic/GraphAttributes.h>
 #include <ogdf/basic/graph_generators.h>
@@ -9,6 +10,8 @@ using namespace emscripten;
 typedef ogdf::List<ogdf::node> NodeList;
 
 typedef ogdf::List<ogdf::edge> EdgeList;
+
+typedef ogdf::List<ogdf::DPoint> DPointList;
 
 void setX (ogdf::GraphAttributes& GA, ogdf::node n, double val) {
   GA.x(n) = val;
@@ -71,6 +74,10 @@ ogdf::node nodeListAt (NodeList& list, int pos) {
 }
 
 ogdf::edge edgeListAt (EdgeList& list, int pos) {
+  return *list.get(pos);
+}
+
+ogdf::DPoint DPointListGet (DPointList& list, int pos) {
   return *list.get(pos);
 }
 
@@ -143,6 +150,7 @@ void defineGraphAttributes () {
     .function("weight", select_overload<int (ogdf::node) const>(&ogdf::GraphAttributes::weight), allow_raw_pointers())
     .function("type", select_overload<ogdf::Graph::NodeType (ogdf::node) const>(&ogdf::GraphAttributes::type), allow_raw_pointers())
     .function("idNode", select_overload<int (ogdf::node) const>(&ogdf::GraphAttributes::idNode), allow_raw_pointers())
+    .function("bends", select_overload<ogdf::DPolyline& (ogdf::edge)>(&ogdf::GraphAttributes::bends), allow_raw_pointers())
     .function("setX", &setX, allow_raw_pointers())
     .function("setY", &setY, allow_raw_pointers())
     .function("setZ", &setZ, allow_raw_pointers())
@@ -245,6 +253,22 @@ void defineGraphAttributes () {
     .function("setAlpha", select_overload<void (unsigned char)>(&ogdf::Color::alpha))
     .function("fromString", &ogdf::Color::fromString)
     .function("toString", &ogdf::Color::toString)
+    ;
+
+  class_<ogdf::GenericPoint<double>>("GenericPointDouble")
+    .property("x", &ogdf::DPoint::m_x)
+    .property("y", &ogdf::DPoint::m_y)
+    ;
+
+  class_<ogdf::DPoint, base<ogdf::GenericPoint<double>>>("DPoint")
+    ;
+
+  class_<DPointList>("DPointList")
+    .function("get", &DPointListGet, allow_raw_pointers())
+    .function("size", &DPointList::size)
+    ;
+
+  class_<ogdf::DPolyline, base<DPointList>>("DPolyline")
     ;
 
   function("setSeed", &ogdf::setSeed);
