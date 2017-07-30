@@ -13,8 +13,8 @@ emogdf-asmjs.js: $(OBJECTS)
 emogdf-wasm.js: $(OBJECTS)
 	em++ $(CXX_OPTIONS) -s WASM=1 --memory-init-file 0 --pre-js js/pre.js --post-js js/post.js -o $@ $(OBJECTS) ogdf-build/libOGDF.a ogdf-build/libCOIN.a
 
-demo: emogdf.js
-	cp emogdf.js demo
+demo: emogdf-asmjs.js
+	cp emogdf-asmjs.js demo/emogdf.js
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
 	em++ $(CXX_OPTIONS) -c $< -o $@

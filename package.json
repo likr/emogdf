@@ -1,6 +1,6 @@
 {
   "name": "emogdf",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Experimental port of Open Graph Drawing Framework (OGDF) for the Web",
   "main": "emogdf-asmjs.js",
   "files": [
@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/likr/emogdf#readme",
   "devDependencies": {
-    "gh-pages": "^0.12.0",
+    "gh-pages": "^1.0.0",
     "mocha": "^3.4.2",
     "power-assert": "^1.4.4"
   }

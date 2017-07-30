@@ -4,3 +4,4 @@ emogdf-asmjs.js
 emogdf-wasm.js
 emogdf-wasm.wasm
 node_modules
+demo/emogdf.js
