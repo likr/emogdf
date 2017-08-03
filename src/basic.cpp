@@ -69,16 +69,34 @@ void setTemplateNode (ogdf::GraphAttributes& GA, ogdf::node n, std::string val) 
   GA.templateNode(n) = val;
 }
 
-ogdf::node nodeListAt (NodeList& list, int pos) {
+template <typename T> T nodeArrayGet (ogdf::NodeArray<T>& array, ogdf::node v) {
+  return array[v];
+}
+
+template <typename T> void nodeArraySet (ogdf::NodeArray<T>& array, ogdf::node v, T value) {
+  array[v] = value;
+}
+
+template <typename T> T listGet (ogdf::List<T>& list, int pos) {
   return *list.get(pos);
 }
 
-ogdf::edge edgeListAt (EdgeList& list, int pos) {
-  return *list.get(pos);
+template <typename T> void defineNodeArray(const char* name) {
+  class_<ogdf::NodeArray<T>>(name)
+    .constructor()
+    .constructor<const ogdf::Graph&, const T&>()
+    .function("fill", &ogdf::NodeArray<T>::fill)
+    .function("get", &nodeArrayGet<T>, allow_raw_pointers())
+    .function("set", &nodeArraySet<T>, allow_raw_pointers())
+    ;
 }
 
-ogdf::DPoint DPointListGet (DPointList& list, int pos) {
-  return *list.get(pos);
+template <typename T> void defineList(const char* name) {
+  class_<ogdf::List<T>>(name)
+    .constructor()
+    .function("get", &listGet<T>, allow_raw_pointers())
+    .function("size", &ogdf::List<T>::size)
+    ;
 }
 
 void defineGraph () {
@@ -102,12 +120,6 @@ void defineGraph () {
     .function("allEdges", &ogdf::Graph::allEdges<EdgeList>)
     ;
 
-  class_<NodeList>("NodeList")
-    .constructor()
-    .function("at", &nodeListAt, allow_raw_pointers())
-    .function("size", &NodeList::size)
-    ;
-
   class_<ogdf::NodeElement>("NodeElement")
     .function("degree", &ogdf::NodeElement::degree)
     .function("index", &ogdf::NodeElement::index)
@@ -116,17 +128,15 @@ void defineGraph () {
 #endif
     ;
 
-  class_<EdgeList>("EdgeList")
-    .constructor()
-    .function("at", &edgeListAt, allow_raw_pointers())
-    .function("size", &EdgeList::size)
-    ;
-
   class_<ogdf::EdgeElement>("EdgeElement")
     .function("index", &ogdf::EdgeElement::index)
     .function("source", &ogdf::EdgeElement::source, allow_raw_pointers())
     .function("target", &ogdf::EdgeElement::target, allow_raw_pointers())
     ;
+
+  defineList<ogdf::node>("NodeList");
+  defineList<ogdf::edge>("EdgeList");
+  defineNodeArray<int>("NodeArrayInt");
 }
 
 void defineGraphAttributes () {
@@ -263,15 +273,10 @@ void defineGraphAttributes () {
   class_<ogdf::DPoint, base<ogdf::GenericPoint<double>>>("DPoint")
     ;
 
-  class_<DPointList>("DPointList")
-    .function("get", &DPointListGet, allow_raw_pointers())
-    .function("size", &DPointList::size)
-    ;
+  defineList<ogdf::DPoint>("DPointList");
 
   class_<ogdf::DPolyline, base<DPointList>>("DPolyline")
     ;
-
-  function("setSeed", &ogdf::setSeed);
 }
 
 void defineGraphGenerators () {
@@ -303,4 +308,6 @@ void defineBasic () {
   defineGraph();
   defineGraphAttributes();
   defineGraphGenerators();
+
+  function("setSeed", &ogdf::setSeed);
 }
