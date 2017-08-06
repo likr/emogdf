@@ -1,6 +1,7 @@
 /* eslint-env mocha */
 
-const {run} = require('./util')
+const assert = require('power-assert')
+const {run} = require('../util')
 
 run((ogdf) => {
   const {
@@ -12,28 +13,30 @@ run((ogdf) => {
     describe('useHighLevelOptions(value)', () => {
       it('sets parameter', () => {
         const layout = new FMMMLayout()
-        layout.useHighLevelOptions(true)
+        assert.equal(layout.useHighLevelOptions, false)
+        layout.useHighLevelOptions = true
+        assert.equal(layout.useHighLevelOptions, true)
       })
     })
 
     describe('unitEdgeLength(value)', () => {
       it('sets parameter', () => {
         const layout = new FMMMLayout()
-        layout.unitEdgeLength(1.0)
+        layout.unitEdgeLength = 1
       })
     })
 
     describe('newInitialPlacement(value)', () => {
       it('sets parameter', () => {
         const layout = new FMMMLayout()
-        layout.newInitialPlacement(true)
+        layout.newInitialPlacement = true
       })
     })
 
     describe('randSeed(value)', () => {
       it('sets parameter', () => {
         const layout = new FMMMLayout()
-        layout.randSeed(0)
+        layout.randSeed = 0
       })
     })
 
