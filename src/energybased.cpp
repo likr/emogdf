@@ -1,43 +1,60 @@
 #include <emscripten/bind.h>
+#include <ogdf/energybased/DTreeMultilevelEmbedder.h>
 #include <ogdf/energybased/DavidsonHarelLayout.h>
 #include <ogdf/energybased/FastMultipoleEmbedder.h>
 #include <ogdf/energybased/FMMMLayout.h>
+#include <ogdf/energybased/GEMLayout.h>
+#include <ogdf/energybased/MultilevelLayout.h>
 #include <ogdf/energybased/TutteLayout.h>
 
 using namespace emscripten;
 
-void defineEnergybased () {
+void defineDavidsonHarelLayout () {
   class_<ogdf::DavidsonHarelLayout>("DavidsonHarelLayout")
     .constructor()
     .function("call", &ogdf::DavidsonHarelLayout::call)
     ;
+}
 
-  class_<ogdf::FastMultipoleEmbedder>("FastMultipoleEmbedder")
-    .constructor()
-    .function("call", select_overload<void(ogdf::GraphAttributes&)>(&ogdf::FastMultipoleEmbedder::call))
-    ;
-
-  // class_<ogdf::FastMultipoleMultilevelEmbedder>("FastMultipoleMultilevelEmbedder")
-  //   .constructor()
-  //   .function("call", &ogdf::FastMultipoleMultilevelEmbedder::call)
-  //   ;
-
+void defineFMMMLayout () {
   class_<ogdf::FMMMLayout>("FMMMLayout")
     .constructor()
     .function("call", select_overload<void(ogdf::GraphAttributes&)>(&ogdf::FMMMLayout::call))
     .function("callEdgeLength", select_overload<void(ogdf::GraphAttributes&, const ogdf::EdgeArray<double>&)>(&ogdf::FMMMLayout::call))
-    .function("useHighLevelOptions", select_overload<void(bool)>(&ogdf::FMMMLayout::useHighLevelOptions))
     .function("setSingleLevel", &ogdf::FMMMLayout::setSingleLevel)
-    .function("pageFormat", select_overload<void(ogdf::FMMMOptions::PageFormatType)>(&ogdf::FMMMLayout::pageFormat))
-    .function("unitEdgeLength", select_overload<void(double)>(&ogdf::FMMMLayout::unitEdgeLength))
-    .function("newInitialPlacement", select_overload<void(bool)>(&ogdf::FMMMLayout::newInitialPlacement))
-    .function("qualityVersusSpeed", select_overload<void(ogdf::FMMMOptions::QualityVsSpeed)>(&ogdf::FMMMLayout::qualityVersusSpeed))
-    .function("randSeed", select_overload<void(int)>(&ogdf::FMMMLayout::randSeed))
-    .function("edgeLengthMeasurement", select_overload<void(ogdf::FMMMOptions::EdgeLengthMeasurement)>(&ogdf::FMMMLayout::edgeLengthMeasurement))
-    .function("allowedPositions", select_overload<void(ogdf::FMMMOptions::AllowedPositions)>(&ogdf::FMMMLayout::allowedPositions))
-    .function("maxIntPosExponent", select_overload<void(int)>(&ogdf::FMMMLayout::maxIntPosExponent))
-    .function("initialPlacementMult", select_overload<void(ogdf::FMMMOptions::InitialPlacementMult)>(&ogdf::FMMMLayout::initialPlacementMult))
-    .function("initialPlacementForces", select_overload<void(ogdf::FMMMOptions::InitialPlacementForces)>(&ogdf::FMMMLayout::initialPlacementForces))
+    .property("useHighLevelOptions",
+        select_overload<bool()const>(&ogdf::FMMMLayout::useHighLevelOptions),
+        select_overload<void(bool)>(&ogdf::FMMMLayout::useHighLevelOptions))
+    .property("pageFormat",
+        select_overload<ogdf::FMMMOptions::PageFormatType()const>(&ogdf::FMMMLayout::pageFormat),
+        select_overload<void(ogdf::FMMMOptions::PageFormatType)>(&ogdf::FMMMLayout::pageFormat))
+    .property("unitEdgeLength",
+        select_overload<double()const>(&ogdf::FMMMLayout::unitEdgeLength),
+        select_overload<void(double)>(&ogdf::FMMMLayout::unitEdgeLength))
+    .property("newInitialPlacement",
+        select_overload<bool()const>(&ogdf::FMMMLayout::newInitialPlacement),
+        select_overload<void(bool)>(&ogdf::FMMMLayout::newInitialPlacement))
+    .property("qualityVersusSpeed",
+        select_overload<ogdf::FMMMOptions::QualityVsSpeed()const>(&ogdf::FMMMLayout::qualityVersusSpeed),
+        select_overload<void(ogdf::FMMMOptions::QualityVsSpeed)>(&ogdf::FMMMLayout::qualityVersusSpeed))
+    .property("randSeed",
+        select_overload<int()const>(&ogdf::FMMMLayout::randSeed),
+        select_overload<void(int)>(&ogdf::FMMMLayout::randSeed))
+    .property("edgeLengthMeasurement",
+        select_overload<ogdf::FMMMOptions::EdgeLengthMeasurement()const>(&ogdf::FMMMLayout::edgeLengthMeasurement),
+        select_overload<void(ogdf::FMMMOptions::EdgeLengthMeasurement)>(&ogdf::FMMMLayout::edgeLengthMeasurement))
+    .property("allowedPositions",
+        select_overload<ogdf::FMMMOptions::AllowedPositions()const>(&ogdf::FMMMLayout::allowedPositions),
+        select_overload<void(ogdf::FMMMOptions::AllowedPositions)>(&ogdf::FMMMLayout::allowedPositions))
+    .property("maxIntPosExponent",
+        select_overload<int()const>(&ogdf::FMMMLayout::maxIntPosExponent),
+        select_overload<void(int)>(&ogdf::FMMMLayout::maxIntPosExponent))
+    .property("initialPlacementMult",
+        select_overload<ogdf::FMMMOptions::InitialPlacementMult()const>(&ogdf::FMMMLayout::initialPlacementMult),
+        select_overload<void(ogdf::FMMMOptions::InitialPlacementMult)>(&ogdf::FMMMLayout::initialPlacementMult))
+    .property("initialPlacementForces",
+        select_overload<ogdf::FMMMOptions::InitialPlacementForces()const>(&ogdf::FMMMLayout::initialPlacementForces),
+        select_overload<void(ogdf::FMMMOptions::InitialPlacementForces)>(&ogdf::FMMMLayout::initialPlacementForces))
     ;
 
   enum_<ogdf::FMMMOptions::PageFormatType>("FMMMOptionsPageFormatType")
@@ -74,9 +91,48 @@ void defineEnergybased () {
     .value("RandomRandIterNr", ogdf::FMMMOptions::InitialPlacementForces::RandomRandIterNr)
     .value("KeepPositions", ogdf::FMMMOptions::InitialPlacementForces::KeepPositions)
     ;
+}
 
+void defineGEMLayout () {
+  class_<ogdf::GEMLayout>("GEMLayout")
+    .constructor()
+    .function("call", &ogdf::GEMLayout::call)
+    ;
+}
+
+void defineMultilevelLayout () {
+  class_<ogdf::MultilevelLayout>("MultilevelLayout")
+    .constructor()
+    .function("call", &ogdf::MultilevelLayout::call)
+    ;
+}
+
+void defineTutteLayout () {
   class_<ogdf::TutteLayout>("TutteLayout")
     .constructor()
     .function("call", select_overload<void(ogdf::GraphAttributes&)>(&ogdf::TutteLayout::call))
     ;
+}
+
+void defineEnergybased () {
+  class_<ogdf::DTreeMultilevelEmbedder2D>("DTreeMultilevelEmbedder")
+    .constructor()
+    .function("call", &ogdf::DTreeMultilevelEmbedder2D::call)
+    ;
+
+  class_<ogdf::FastMultipoleEmbedder>("FastMultipoleEmbedder")
+    .constructor()
+    .function("call", select_overload<void(ogdf::GraphAttributes&)>(&ogdf::FastMultipoleEmbedder::call))
+    ;
+
+  // class_<ogdf::FastMultipoleMultilevelEmbedder>("FastMultipoleMultilevelEmbedder")
+  //   .constructor()
+  //   .function("call", &ogdf::FastMultipoleMultilevelEmbedder::call)
+  //   ;
+
+  defineDavidsonHarelLayout();
+  defineFMMMLayout();
+  defineGEMLayout();
+  defineMultilevelLayout();
+  defineTutteLayout();
 }
