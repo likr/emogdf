@@ -25,6 +25,7 @@ void defineEnergybased () {
   class_<ogdf::FMMMLayout>("FMMMLayout")
     .constructor()
     .function("call", select_overload<void(ogdf::GraphAttributes&)>(&ogdf::FMMMLayout::call))
+    .function("callEdgeLength", select_overload<void(ogdf::GraphAttributes&, const ogdf::EdgeArray<double>&)>(&ogdf::FMMMLayout::call))
     .function("useHighLevelOptions", select_overload<void(bool)>(&ogdf::FMMMLayout::useHighLevelOptions))
     .function("setSingleLevel", &ogdf::FMMMLayout::setSingleLevel)
     .function("pageFormat", select_overload<void(ogdf::FMMMOptions::PageFormatType)>(&ogdf::FMMMLayout::pageFormat))
