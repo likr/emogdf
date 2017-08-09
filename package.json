@@ -1,6 +1,6 @@
 {
   "name": "emogdf",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Experimental port of Open Graph Drawing Framework (OGDF) for the Web",
   "main": "emogdf-asmjs.js",
   "files": [
