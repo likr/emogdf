@@ -97,6 +97,45 @@ void defineGEMLayout () {
   class_<ogdf::GEMLayout>("GEMLayout")
     .constructor()
     .function("call", &ogdf::GEMLayout::call)
+    .property("attractionFormula",
+        select_overload<int()const>(&ogdf::GEMLayout::attractionFormula),
+        select_overload<void(int)>(&ogdf::GEMLayout::attractionFormula))
+    .property("desiredLength",
+        select_overload<double()const>(&ogdf::GEMLayout::desiredLength),
+        select_overload<void(double)>(&ogdf::GEMLayout::desiredLength))
+    .property("gravitationalConstant",
+        select_overload<double()const>(&ogdf::GEMLayout::gravitationalConstant),
+        select_overload<void(double)>(&ogdf::GEMLayout::gravitationalConstant))
+    .property("initialTemperature",
+        select_overload<double()const>(&ogdf::GEMLayout::initialTemperature),
+        select_overload<void(double)>(&ogdf::GEMLayout::initialTemperature))
+    .property("maximalDisturbance",
+        select_overload<double()const>(&ogdf::GEMLayout::maximalDisturbance),
+        select_overload<void(double)>(&ogdf::GEMLayout::maximalDisturbance))
+    .property("minDistCC",
+        select_overload<double()const>(&ogdf::GEMLayout::minDistCC),
+        select_overload<void(double)>(&ogdf::GEMLayout::minDistCC))
+    .property("minimalTemperature",
+        select_overload<double()const>(&ogdf::GEMLayout::minimalTemperature),
+        select_overload<void(double)>(&ogdf::GEMLayout::minimalTemperature))
+    .property("numberOfRounds",
+        select_overload<int()const>(&ogdf::GEMLayout::numberOfRounds),
+        select_overload<void(int)>(&ogdf::GEMLayout::numberOfRounds))
+    .property("oscillationAngle",
+        select_overload<double()const>(&ogdf::GEMLayout::oscillationAngle),
+        select_overload<void(double)>(&ogdf::GEMLayout::oscillationAngle))
+    .property("oscillationSensitivity",
+        select_overload<double()const>(&ogdf::GEMLayout::oscillationSensitivity),
+        select_overload<void(double)>(&ogdf::GEMLayout::oscillationSensitivity))
+    .property("pageRatio",
+        select_overload<double()const>(&ogdf::GEMLayout::pageRatio),
+        select_overload<void(double)>(&ogdf::GEMLayout::pageRatio))
+    .property("rotationAngle",
+        select_overload<double()const>(&ogdf::GEMLayout::rotationAngle),
+        select_overload<void(double)>(&ogdf::GEMLayout::rotationAngle))
+    .property("rotationSensitivity",
+        select_overload<double()const>(&ogdf::GEMLayout::rotationSensitivity),
+        select_overload<void(double)>(&ogdf::GEMLayout::rotationSensitivity))
     ;
 }
 
