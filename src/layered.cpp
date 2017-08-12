@@ -7,6 +7,7 @@ void defineLayered () {
   class_<ogdf::SugiyamaLayout>("SugiyamaLayout")
     .constructor()
     .function("call", select_overload<void(ogdf::GraphAttributes&)>(&ogdf::SugiyamaLayout::call))
+    .function("callCluster", select_overload<void(ogdf::ClusterGraphAttributes&)>(&ogdf::SugiyamaLayout::call))
     .function("callWithRank", select_overload<void(ogdf::GraphAttributes&, ogdf::NodeArray<int>&)>(&ogdf::SugiyamaLayout::call))
     .function("setRanking", &ogdf::SugiyamaLayout::setRanking, allow_raw_pointers())
     .function("setCrossMin", &ogdf::SugiyamaLayout::setCrossMin, allow_raw_pointers())

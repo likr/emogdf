@@ -4,6 +4,8 @@
 #include <ogdf/basic/Graph_d.h>
 #include <ogdf/basic/GraphAttributes.h>
 #include <ogdf/basic/graph_generators.h>
+#include <ogdf/cluster/ClusterGraph.h>
+#include <ogdf/cluster/ClusterGraphAttributes.h>
 
 using namespace emscripten;
 
@@ -120,6 +122,10 @@ void defineGraph () {
     .function("allEdges", &ogdf::Graph::allEdges<EdgeList>)
     ;
 
+  class_<ogdf::ClusterGraph>("ClusterGraph")
+    .constructor()
+    ;
+
   class_<ogdf::NodeElement>("NodeElement")
     .function("degree", &ogdf::NodeElement::degree)
     .function("index", &ogdf::NodeElement::index)
@@ -194,6 +200,11 @@ void defineGraphAttributes () {
     .class_property("edgeSubGraphs", &ogdf::GraphAttributes::edgeSubGraphs)
     .class_property("nodeWeight", &ogdf::GraphAttributes::nodeWeight)
     .class_property("threeD", &ogdf::GraphAttributes::threeD)
+    ;
+
+  class_<ogdf::ClusterGraphAttributes, base<ogdf::GraphAttributes>>("ClusterGraphAttributes")
+    .constructor()
+    .constructor<ogdf::ClusterGraph&, long>()
     ;
 
   enum_<ogdf::Shape>("Shape")
