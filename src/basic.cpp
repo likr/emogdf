@@ -140,6 +140,11 @@ void defineGraph () {
     .function("target", &ogdf::EdgeElement::target, allow_raw_pointers())
     ;
 
+  class_<ogdf::ClusterElement>("ClusterElement")
+    .function("index", &ogdf::ClusterElement::index)
+    .function("depth", &ogdf::ClusterElement::depth)
+    ;
+
   defineList<ogdf::node>("NodeList");
   defineList<ogdf::edge>("EdgeList");
   defineNodeArray<int>("NodeArrayInt");
