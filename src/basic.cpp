@@ -71,6 +71,14 @@ void setTemplateNode (ogdf::GraphAttributes& GA, ogdf::node n, std::string val) 
   GA.templateNode(n) = val;
 }
 
+void setClusterX (ogdf::ClusterGraphAttributes& CGA, ogdf::cluster c, double val) {
+  CGA.x(c) = val;
+}
+
+void setClusterY (ogdf::ClusterGraphAttributes& CGA, ogdf::cluster c, double val) {
+  CGA.y(c) = val;
+}
+
 template <typename T> T nodeArrayGet (ogdf::NodeArray<T>& array, ogdf::node v) {
   return array[v];
 }
@@ -124,6 +132,11 @@ void defineGraph () {
 
   class_<ogdf::ClusterGraph>("ClusterGraph")
     .constructor()
+    .function("createCluster", &ogdf::ClusterGraph::createCluster, allow_raw_pointers())
+    .function("createEmptyCluster", &ogdf::ClusterGraph::createEmptyCluster, allow_raw_pointers())
+    .function("delCluster", &ogdf::ClusterGraph::delCluster, allow_raw_pointers())
+    .function("firstCluster", &ogdf::ClusterGraph::firstCluster, allow_raw_pointers())
+    .function("lastCluster", &ogdf::ClusterGraph::lastCluster, allow_raw_pointers())
     ;
 
   class_<ogdf::NodeElement>("NodeElement")
@@ -210,6 +223,10 @@ void defineGraphAttributes () {
   class_<ogdf::ClusterGraphAttributes, base<ogdf::GraphAttributes>>("ClusterGraphAttributes")
     .constructor()
     .constructor<ogdf::ClusterGraph&, long>()
+    .function("x", select_overload<double (ogdf::cluster) const>(&ogdf::ClusterGraphAttributes::x), allow_raw_pointers())
+    .function("x", &setClusterX, allow_raw_pointers())
+    .function("y", select_overload<double (ogdf::cluster) const>(&ogdf::ClusterGraphAttributes::y), allow_raw_pointers())
+    .function("y", &setClusterY, allow_raw_pointers())
     ;
 
   enum_<ogdf::Shape>("Shape")
