@@ -39,9 +39,9 @@ void setShape (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::Shape val) {
 	GA.shape(n) = val;
 }
 
-// void setStrokeType (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::StrokeType val) {
-//   GA.setStrokeType(n, val);
-// }
+void setStrokeType (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::StrokeType val) {
+  GA.strokeType(n) = val;
+}
 
 void setStrokeColor (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::Color val) {
   GA.strokeColor(n) = val;
@@ -51,9 +51,9 @@ void setStrokeWidth (ogdf::GraphAttributes& GA, ogdf::node n, float val) {
   GA.strokeWidth(n) = val;
 }
 
-// void setFillPattern (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::FillPattern val) {
-//   GA.setFillPattern(n, val);
-// }
+void setFillPattern (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::FillPattern val) {
+  GA.fillPattern(n) = val;
+}
 
 void setFillColor (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::Color val) {
   GA.fillColor(n) = val;
@@ -69,6 +69,22 @@ void setLabel (ogdf::GraphAttributes& GA, ogdf::node n, std::string val) {
 
 void setTemplateNode (ogdf::GraphAttributes& GA, ogdf::node n, std::string val) {
   GA.templateNode(n) = val;
+}
+
+void setWeight (ogdf::GraphAttributes& GA, ogdf::node n, int val) {
+  GA.weight(n) = val;
+}
+
+void setType (ogdf::GraphAttributes& GA, ogdf::node n, ogdf::Graph::NodeType val) {
+  GA.type(n) = val;
+}
+
+void setIdNode (ogdf::GraphAttributes& GA, ogdf::node n, int val) {
+  GA.idNode(n) = val;
+}
+
+void setBends (ogdf::GraphAttributes& GA, ogdf::edge e, ogdf::DPolyline val) {
+  GA.bends(e) = val;
 }
 
 void setClusterX (ogdf::ClusterGraphAttributes& CGA, ogdf::cluster c, double val) {
@@ -166,42 +182,44 @@ void defineGraph () {
 void defineGraphAttributes () {
   class_<ogdf::GraphAttributes>("GraphAttributes")
     .constructor()
+    .constructor<ogdf::Graph&>()
     .constructor<ogdf::Graph&, long>()
     .function("x", select_overload<double (ogdf::node) const>(&ogdf::GraphAttributes::x), allow_raw_pointers())
+    .function("x", &setX, allow_raw_pointers())
     .function("y", select_overload<double (ogdf::node) const>(&ogdf::GraphAttributes::y), allow_raw_pointers())
+    .function("y", &setY, allow_raw_pointers())
     .function("z", select_overload<double (ogdf::node) const>(&ogdf::GraphAttributes::z), allow_raw_pointers())
+    .function("z", &setZ, allow_raw_pointers())
     .function("width", select_overload<double (ogdf::node) const>(&ogdf::GraphAttributes::width), allow_raw_pointers())
+    .function("width", &setWidth, allow_raw_pointers())
     .function("height", select_overload<double (ogdf::node) const>(&ogdf::GraphAttributes::height), allow_raw_pointers())
+    .function("height", &setHeight, allow_raw_pointers())
     .function("shape", select_overload<ogdf::Shape (ogdf::node) const>(&ogdf::GraphAttributes::shape), allow_raw_pointers())
+    .function("shape", &setShape, allow_raw_pointers())
     .function("strokeType", select_overload<ogdf::StrokeType (ogdf::node) const>(&ogdf::GraphAttributes::strokeType), allow_raw_pointers())
+    .function("strokeType", &setStrokeType, allow_raw_pointers())
     .function("strokeColor", select_overload<const ogdf::Color& (ogdf::node) const>(&ogdf::GraphAttributes::strokeColor), allow_raw_pointers())
+    .function("strokeColor", &setStrokeColor, allow_raw_pointers())
     .function("strokeWidth", select_overload<float (ogdf::node) const>(&ogdf::GraphAttributes::strokeWidth), allow_raw_pointers())
+    .function("strokeWidth", &setStrokeWidth, allow_raw_pointers())
     .function("fillPattern", select_overload<ogdf::FillPattern (ogdf::node) const>(&ogdf::GraphAttributes::fillPattern), allow_raw_pointers())
+    .function("fillPattern", &setFillPattern, allow_raw_pointers())
     .function("fillColor", select_overload<const ogdf::Color& (ogdf::node) const>(&ogdf::GraphAttributes::fillColor), allow_raw_pointers())
+    .function("fillColor", &setFillColor, allow_raw_pointers())
     .function("fillBgColor", select_overload<const ogdf::Color& (ogdf::node) const>(&ogdf::GraphAttributes::fillBgColor), allow_raw_pointers())
+    .function("fillBgColor", &setFillBgColor, allow_raw_pointers())
     .function("label", select_overload<const std::string& (ogdf::node) const>(&ogdf::GraphAttributes::label), allow_raw_pointers())
+    .function("label", &setLabel, allow_raw_pointers())
     .function("templateNode", select_overload<const std::string& (ogdf::node) const>(&ogdf::GraphAttributes::templateNode), allow_raw_pointers())
+    .function("templateNode", &setTemplateNode, allow_raw_pointers())
     .function("weight", select_overload<int (ogdf::node) const>(&ogdf::GraphAttributes::weight), allow_raw_pointers())
+    .function("weight", &setWeight, allow_raw_pointers())
     .function("type", select_overload<ogdf::Graph::NodeType (ogdf::node) const>(&ogdf::GraphAttributes::type), allow_raw_pointers())
+    .function("type", &setType, allow_raw_pointers())
     .function("idNode", select_overload<int (ogdf::node) const>(&ogdf::GraphAttributes::idNode), allow_raw_pointers())
+    .function("idNode", &setIdNode, allow_raw_pointers())
     .function("bends", select_overload<ogdf::DPolyline& (ogdf::edge)>(&ogdf::GraphAttributes::bends), allow_raw_pointers())
-    .function("setX", &setX, allow_raw_pointers())
-    .function("setY", &setY, allow_raw_pointers())
-    .function("setZ", &setZ, allow_raw_pointers())
-    .function("setWidth", &setWidth, allow_raw_pointers())
-    .function("setHeight", &setHeight, allow_raw_pointers())
-    .function("setShape", &setShape, allow_raw_pointers())
-    // .function("setStrokeType", &setStrokeType, allow_raw_pointers())
-    .function("setStrokeColor", &setStrokeColor, allow_raw_pointers())
-    .function("setStrokeWidth", &setStrokeWidth, allow_raw_pointers())
-    // .function("setFillPattern", &setFillPattern, allow_raw_pointers())
-    .function("setFillColor", &setFillColor, allow_raw_pointers())
-    .function("setFillBgColor", &setFillBgColor, allow_raw_pointers())
-    .function("setLabel", &setLabel, allow_raw_pointers())
-    .function("setTemplateNode", &setTemplateNode, allow_raw_pointers())
-    .function("setWeight", select_overload<int (ogdf::node) const>(&ogdf::GraphAttributes::weight), allow_raw_pointers())
-    .function("setType", select_overload<ogdf::Graph::NodeType (ogdf::node) const>(&ogdf::GraphAttributes::type), allow_raw_pointers())
-    .function("setIdNode", select_overload<int (ogdf::node) const>(&ogdf::GraphAttributes::idNode), allow_raw_pointers())
+    .function("bends", &setBends, allow_raw_pointers())
     .class_property("nodeGraphics", &ogdf::GraphAttributes::nodeGraphics)
     .class_property("edgeGraphics", &ogdf::GraphAttributes::edgeGraphics)
     .class_property("edgeIntWeight", &ogdf::GraphAttributes::edgeIntWeight)
@@ -223,10 +241,10 @@ void defineGraphAttributes () {
   class_<ogdf::ClusterGraphAttributes, base<ogdf::GraphAttributes>>("ClusterGraphAttributes")
     .constructor()
     .constructor<ogdf::ClusterGraph&, long>()
-    .function("x", select_overload<double (ogdf::cluster) const>(&ogdf::ClusterGraphAttributes::x), allow_raw_pointers())
-    .function("x", &setClusterX, allow_raw_pointers())
-    .function("y", select_overload<double (ogdf::cluster) const>(&ogdf::ClusterGraphAttributes::y), allow_raw_pointers())
-    .function("y", &setClusterY, allow_raw_pointers())
+    .function("clusterX", select_overload<double (ogdf::cluster) const>(&ogdf::ClusterGraphAttributes::x), allow_raw_pointers())
+    .function("clusterX", &setClusterX, allow_raw_pointers())
+    .function("clusterY", select_overload<double (ogdf::cluster) const>(&ogdf::ClusterGraphAttributes::y), allow_raw_pointers())
+    .function("clusterY", &setClusterY, allow_raw_pointers())
     ;
 
   enum_<ogdf::Shape>("Shape")
@@ -246,32 +264,32 @@ void defineGraphAttributes () {
     .value("Image", ogdf::Shape::Image)
     ;
 
-  // enum_<ogdf::StrokeType>("StrokeType")
-  //   .value("stNone", ogdf::StrokeType::stNone)
-  //   .value("stSolid", ogdf::StrokeType::stSolid)
-  //   .value("stDash", ogdf::StrokeType::stDash)
-  //   .value("stDot", ogdf::StrokeType::stDot)
-  //   .value("stDashdot", ogdf::StrokeType::stDashdot)
-  //   .value("stDashdotdot", ogdf::StrokeType::stDashdotdot)
-  //   ;
+  enum_<ogdf::StrokeType>("StrokeType")
+    .value("None", ogdf::StrokeType::None)
+    .value("Solid", ogdf::StrokeType::Solid)
+    .value("Dash", ogdf::StrokeType::Dash)
+    .value("Dot", ogdf::StrokeType::Dot)
+    .value("Dashdot", ogdf::StrokeType::Dashdot)
+    .value("Dashdotdot", ogdf::StrokeType::Dashdotdot)
+    ;
 
-  // enum_<ogdf::FillPattern>("FillPattern")
-  //   .value("fpNone", ogdf::FillPattern::fpNone)
-  //   .value("fpSolid", ogdf::FillPattern::fpSolid)
-  //   .value("fpDense1", ogdf::FillPattern::fpDense1)
-  //   .value("fpDense2", ogdf::FillPattern::fpDense2)
-  //   .value("fpDense3", ogdf::FillPattern::fpDense3)
-  //   .value("fpDense4", ogdf::FillPattern::fpDense4)
-  //   .value("fpDense5", ogdf::FillPattern::fpDense5)
-  //   .value("fpDense6", ogdf::FillPattern::fpDense6)
-  //   .value("fpDense7", ogdf::FillPattern::fpDense7)
-  //   .value("fpHorizontal", ogdf::FillPattern::fpHorizontal)
-  //   .value("fpVertical", ogdf::FillPattern::fpVertical)
-  //   .value("fpCross", ogdf::FillPattern::fpCross)
-  //   .value("fpBackwardDiagonal", ogdf::FillPattern::fpBackwardDiagonal)
-  //   .value("fpForwardDiagonal", ogdf::FillPattern::fpForwardDiagonal)
-  //   .value("fpDiagonalCross", ogdf::FillPattern::fpDiagonalCross)
-  //   ;
+  enum_<ogdf::FillPattern>("FillPattern")
+    .value("None", ogdf::FillPattern::None)
+    .value("Solid", ogdf::FillPattern::Solid)
+    .value("Dense1", ogdf::FillPattern::Dense1)
+    .value("Dense2", ogdf::FillPattern::Dense2)
+    .value("Dense3", ogdf::FillPattern::Dense3)
+    .value("Dense4", ogdf::FillPattern::Dense4)
+    .value("Dense5", ogdf::FillPattern::Dense5)
+    .value("Dense6", ogdf::FillPattern::Dense6)
+    .value("Dense7", ogdf::FillPattern::Dense7)
+    .value("Horizontal", ogdf::FillPattern::Horizontal)
+    .value("Vertical", ogdf::FillPattern::Vertical)
+    .value("Cross", ogdf::FillPattern::Cross)
+    .value("BackwardDiagonal", ogdf::FillPattern::BackwardDiagonal)
+    .value("ForwardDiagonal", ogdf::FillPattern::ForwardDiagonal)
+    .value("DiagonalCross", ogdf::FillPattern::DiagonalCross)
+    ;
 
   enum_<ogdf::Graph::NodeType>("NodeType")
     .value("vertex", ogdf::Graph::NodeType::vertex)
@@ -290,10 +308,10 @@ void defineGraphAttributes () {
     .function("green", select_overload<unsigned char () const>(&ogdf::Color::green))
     .function("blue", select_overload<unsigned char () const>(&ogdf::Color::blue))
     .function("alpha", select_overload<unsigned char () const>(&ogdf::Color::alpha))
-    .function("setRed", select_overload<void (unsigned char)>(&ogdf::Color::red))
-    .function("setGreen", select_overload<void (unsigned char)>(&ogdf::Color::green))
-    .function("setBlue", select_overload<void (unsigned char)>(&ogdf::Color::blue))
-    .function("setAlpha", select_overload<void (unsigned char)>(&ogdf::Color::alpha))
+    .function("red", select_overload<void (unsigned char)>(&ogdf::Color::red))
+    .function("green", select_overload<void (unsigned char)>(&ogdf::Color::green))
+    .function("blue", select_overload<void (unsigned char)>(&ogdf::Color::blue))
+    .function("alpha", select_overload<void (unsigned char)>(&ogdf::Color::alpha))
     .function("fromString", &ogdf::Color::fromString)
     .function("toString", &ogdf::Color::toString)
     ;
