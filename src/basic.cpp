@@ -157,6 +157,13 @@ template <typename T> void defineList(const char* name) {
     ;
 }
 
+template <typename T> void defineSList(const char* name) {
+  class_<ogdf::SList<T>>(name)
+    .constructor()
+    .function("size", &ogdf::SList<T>::size)
+    ;
+}
+
 void defineGraph () {
   class_<ogdf::Graph>("Graph")
     .constructor()
