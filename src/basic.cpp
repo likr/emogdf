@@ -139,6 +139,10 @@ template <typename T> T listGet (ogdf::List<T>& list, int pos) {
   return *list.get(pos);
 }
 
+template <typename T> void insertSList (ogdf::SList<T>& list, T value) {
+  list.insertAfter(value, list.begin());
+}
+
 template <typename T> void defineNodeArray(const char* name) {
   class_<ogdf::NodeArray<T>>(name)
     .constructor()
@@ -161,6 +165,7 @@ template <typename T> void defineSList(const char* name) {
   class_<ogdf::SList<T>>(name)
     .constructor()
     .function("size", &ogdf::SList<T>::size)
+    .function("insert", &insertSList<T>, allow_raw_pointers())
     ;
 }
 
@@ -187,6 +192,7 @@ void defineGraph () {
 
   class_<ogdf::ClusterGraph>("ClusterGraph")
     .constructor()
+    .constructor<ogdf::Graph&>()
     .function("createCluster", &ogdf::ClusterGraph::createCluster, allow_raw_pointers())
     .function("createEmptyCluster", &ogdf::ClusterGraph::createEmptyCluster, allow_raw_pointers())
     .function("delCluster", &ogdf::ClusterGraph::delCluster, allow_raw_pointers())
@@ -216,6 +222,7 @@ void defineGraph () {
   defineList<ogdf::node>("NodeList");
   defineList<ogdf::edge>("EdgeList");
   defineNodeArray<int>("NodeArrayInt");
+  defineSList<ogdf::node>("NodeSList");
 }
 
 void defineGraphAttributes () {
